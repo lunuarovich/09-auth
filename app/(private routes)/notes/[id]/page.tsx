@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { HydrationBoundary } from "@tanstack/react-query";
 
-import { fetchNoteById } from "@/lib/api";
+import { cookies } from "next/headers";
+
+import { fetchNoteById } from "@/lib/api/serverApi";
 import NoteDetailsClient from "./NoteDetails.client";
 
 const OG_IMAGE_URL =
@@ -57,12 +59,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function NoteDetailsPage({ params }: PageProps) {
   const { id } = await params;
+  const cookieStore = await cookies();
 
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["note", id],
-    queryFn: () => fetchNoteById(id),
+    queryFn: () => fetchNoteById(id, cookieStore.toString()),
   });
 
   return (

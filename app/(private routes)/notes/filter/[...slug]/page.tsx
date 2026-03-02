@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { HydrationBoundary } from "@tanstack/react-query";
 
-import { fetchNotes } from "@/lib/api";
+import { cookies } from "next/headers";
+
+import { fetchNotes } from "@/lib/api/serverApi";
 import NotesClient from "./Notes.client";
 
 const OG_IMAGE_URL =
@@ -14,6 +16,7 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const cookieStore = await cookies();
 
   const first = slug?.[0] ?? "all";
   const tag = first === "all" ? undefined : first;
@@ -40,6 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function NotesBySlugPage({ params }: PageProps) {
   const { slug } = await params;
+  const cookieStore = await cookies();
 
   const first = slug?.[0] ?? "all";
   const tag = first === "all" ? undefined : first;
