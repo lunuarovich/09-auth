@@ -5,16 +5,11 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { createNote } from "@/lib/api/clientApi";
+import type { CreateNotePayload } from "@/lib/api/clientApi";
 import { useNoteStore, initialDraft } from "@/lib/store/noteStore";
 import type { Note } from "@/types/note";
 
 import css from "./NoteForm.module.css";
-
-type CreateNotePayload = {
-  title: string;
-  content?: string;
-  tag: Note["tag"];
-};
 
 const TAG_OPTIONS: Note["tag"][] = [
   "Todo",
@@ -59,21 +54,23 @@ export default function NoteForm() {
         setDraft({ tag: value as Note["tag"] });
       }
     },
-    [setDraft]
+    [setDraft],
   );
 
   const createNoteAction = useCallback(
     async (formData: FormData) => {
       const title = String(formData.get("title") ?? "").trim();
       const content = String(formData.get("content") ?? "").trim();
-      const tag = String(formData.get("tag") ?? initialDraft.tag) as Note["tag"];
+      const tag = String(
+        formData.get("tag") ?? initialDraft.tag,
+      ) as Note["tag"];
 
       if (title.length < 3) return;
 
       const payload: CreateNotePayload = {
         title,
+        content,
         tag,
-        ...(content ? { content } : {}),
       };
 
       try {
@@ -84,7 +81,7 @@ export default function NoteForm() {
         // error state is shown via mutation.isError
       }
     },
-    [mutation, clearDraft, router]
+    [mutation, clearDraft, router],
   );
 
   return (
@@ -111,6 +108,8 @@ export default function NoteForm() {
           className={css.textarea}
           value={draft.content}
           maxLength={500}
+          minLength={3}
+          required
           onChange={handleChange}
         />
       </div>

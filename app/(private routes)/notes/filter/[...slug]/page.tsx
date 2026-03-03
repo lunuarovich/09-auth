@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { HydrationBoundary } from "@tanstack/react-query";
 
-import { cookies } from "next/headers";
-
 import { fetchNotes } from "@/lib/api/serverApi";
 import NotesClient from "./Notes.client";
+import getCookieHeader from "@/lib/utils/getCookieHeader";
 
 const OG_IMAGE_URL =
   "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg";
@@ -14,9 +13,10 @@ type PageProps = {
   params: Promise<{ slug: string[] }>;
 };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const cookieStore = await cookies();
 
   const first = slug?.[0] ?? "all";
   const tag = first === "all" ? undefined : first;
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function NotesBySlugPage({ params }: PageProps) {
   const { slug } = await params;
-  const cookieStore = await cookies();
+  const cookieHeader = await getCookieHeader();
 
   const first = slug?.[0] ?? "all";
   const tag = first === "all" ? undefined : first;
@@ -52,7 +52,7 @@ export default async function NotesBySlugPage({ params }: PageProps) {
 
   await queryClient.prefetchQuery({
     queryKey: ["notes", 1, "", tag ?? ""],
-    queryFn: () => fetchNotes(1, "", tag),
+    queryFn: () => fetchNotes({ page: 1, search: "", tag }, cookieHeader),
   });
 
   return (
