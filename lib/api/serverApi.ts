@@ -1,4 +1,5 @@
 import { api } from "./api";
+import type { AxiosResponse } from "axios";
 
 import type { Note } from "@/types/note";
 import type { NotesResponse } from "@/types/notes-response";
@@ -47,9 +48,9 @@ export async function fetchNoteById(
 
 export type SessionResponse = { success: boolean };
 
-export async function checkSession(cookieHeader: string): Promise<SessionResponse> {
+export async function checkSession(cookieHeader: string): Promise<AxiosResponse<SessionResponse>> {
   const res = await api.get<SessionResponse>("/auth/session", withCookies(cookieHeader));
-  return res.data;
+  return res;
 }
 
 export async function getMe(cookieHeader: string): Promise<User> {
