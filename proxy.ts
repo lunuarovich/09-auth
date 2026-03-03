@@ -19,6 +19,28 @@ function shouldSkip(pathname: string) {
   );
 }
 
+function redirectWithCookies(
+  req: NextRequest,
+  toPathname: string,
+  baseResponseWithCookies: NextResponse
+) {
+  const url = req.nextUrl.clone();
+  url.pathname = toPathname;
+
+  const redirectRes = NextResponse.redirect(url);
+
+  const setCookie = baseResponseWithCookies.headers.getSetCookie?.();
+
+  if (setCookie && setCookie.length > 0) {
+    setCookie.forEach((c) => redirectRes.headers.append("set-cookie", c));
+  } else {
+    const raw = baseResponseWithCookies.headers.get("set-cookie");
+    if (raw) redirectRes.headers.append("set-cookie", raw);
+  }
+
+  return redirectRes;
+}
+
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
@@ -30,51 +52,43 @@ export async function proxy(req: NextRequest) {
   const accessToken = cookieStore.get("accessToken")?.value;
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
-  let isAuthenticated = Boolean(accessToken);
+  let authed = Boolean(accessToken);
 
-  const response = NextResponse.next();
+  const res = NextResponse.next();
 
   if (!accessToken && refreshToken) {
     try {
       const cookieHeader = cookieStore.toString();
+      const sessionRes = await checkSession(cookieHeader);
 
-      const sessionResponse = await checkSession(cookieHeader);
+      const setCookieHeader = sessionRes.headers["set-cookie"];
+      if (setCookieHeader) {
+        const setCookieArr = Array.isArray(setCookieHeader)
+          ? setCookieHeader
+          : [setCookieHeader];
 
-      const setCookie = sessionResponse.headers["set-cookie"];
+        setCookieArr.forEach((c) => res.headers.append("set-cookie", c));
 
-      if (setCookie) {
-        const cookiesArray = Array.isArray(setCookie)
-          ? setCookie
-          : [setCookie];
-
-        cookiesArray.forEach((cookie) => {
-          response.headers.append("set-cookie", cookie);
-        });
-
-        if (cookiesArray.some((cookie) => cookie.startsWith("accessToken="))) {
-          isAuthenticated = true;
+        if (setCookieArr.some((c) => c.startsWith("accessToken="))) {
+          authed = true;
         }
       }
 
-      if (sessionResponse.data?.success) {
-        isAuthenticated = true;
+      if (sessionRes.data?.success) {
+        authed = true;
       }
     } catch {
-      isAuthenticated = false;
+      authed = false;
     }
   }
 
-  if (!isAuthenticated && isPrivatePath(pathname)) {
-    const url = req.nextUrl.clone();
-    url.pathname = "/sign-in";
-    return NextResponse.redirect(url);
+  if (!authed && isPrivatePath(pathname)) {
+    return redirectWithCookies(req, "/sign-in", res);
   }
 
-  if (isAuthenticated && isAuthPath(pathname)) {
-    const url = req.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
+  if (authed && isAuthPath(pathname)) {
+    return redirectWithCookies(req, "/", res);
   }
 
-  return response;
+  return res;
 }
