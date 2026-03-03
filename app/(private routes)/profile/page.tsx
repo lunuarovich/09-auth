@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { cookies } from "next/headers";
 
 import css from "./ProfilePage.module.css";
 import { getMe } from "@/lib/api/serverApi";
+import getCookieHeader from "@/lib/utils/getCookieHeader";
 
 const OG_IMAGE_URL =
   "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg";
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfilePage() {
-  const cookieStore = await cookies();
-  const user = await getMe(cookieStore.toString());
+  const cookieHeader = await getCookieHeader();
+  const user = await getMe(cookieHeader);
 
   return (
     <main className={css.mainContent}>

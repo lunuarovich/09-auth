@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { HydrationBoundary } from "@tanstack/react-query";
 
-import { cookies } from "next/headers";
-
 import { fetchNoteById } from "@/lib/api/serverApi";
 import NoteDetailsClient from "./NoteDetails.client";
+import getCookieHeader from "@/lib/utils/getCookieHeader";
 
 const OG_IMAGE_URL =
   "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg";
@@ -14,11 +13,14 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { id } = await params;
 
   try {
-    const note = await fetchNoteById(id);
+    const cookieHeader = await getCookieHeader();
+    const note = await fetchNoteById(id, cookieHeader);
 
     const title = note.title || "Note details";
     const descriptionSource =
@@ -59,13 +61,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function NoteDetailsPage({ params }: PageProps) {
   const { id } = await params;
-  const cookieStore = await cookies();
+  const cookieHeader = await getCookieHeader();
 
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["note", id],
-    queryFn: () => fetchNoteById(id, cookieStore.toString()),
+    queryFn: () => fetchNoteById(id, cookieHeader),
   });
 
   return (
