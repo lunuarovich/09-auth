@@ -7,6 +7,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 import { checkSession, getMe, logout } from "@/lib/api/clientApi";
 
+import Loader from "@/components/Loader/Loader";
+
 function isPrivatePath(pathname: string) {
   return pathname.startsWith("/profile") || pathname.startsWith("/notes");
 }
@@ -51,7 +53,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [pathname, router, setUser, clearIsAuthenticated]);
 
-  if (isLoading) return <p style={{ padding: 16 }}>Loading...</p>;
+  if (isLoading) return <Loader />;
 
   return children;
 }
