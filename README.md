@@ -106,23 +106,6 @@ npm run lint
 | `/profile` | User profile |
 | `/profile/edit` | Edit username and local avatar |
 
-## Project Structure
-
-```txt
-app/
-  (auth routes)/       Authentication pages
-  (private routes)/    Notes and profile pages
-  @modal/              Intercepting modal route for note preview
-  api/                 Local proxy routes to NoteHub API
-components/            Reusable UI components
-lib/
-  api/                 Client/server API wrappers
-  store/               Zustand stores
-  utils/               Shared helpers
-types/                 Shared TypeScript types
-docs/                  README artwork
-```
-
 ## Avatar Note
 
 The public NoteHub API accepts profile updates for username, but it does not persist uploaded avatar files through `PATCH /users/me`. To keep the UI useful, avatar upload is handled locally:
@@ -162,13 +145,3 @@ The current project passes:
 npm run lint
 npm run build
 ```
-
-## Visual Identity
-
-The favicon lives in:
-
-```txt
-app/icon.svg
-```
-
-It uses a compact blue note mark with a white `N`, designed to stay readable at browser-tab size.
