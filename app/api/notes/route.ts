@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.response?.status ?? 500 }
+        { status: error.status }
       );
     }
     logErrorResponse({ message: (error as Error).message });
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.response?.status ?? 500 }
+        { status: error.status }
       );
     }
     logErrorResponse({ message: (error as Error).message });
