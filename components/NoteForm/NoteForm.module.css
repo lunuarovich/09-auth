@@ -1,71 +1,243 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+  padding: 26px;
+  background-color: #ffffff;
+  border: 1px solid #dce3ec;
+  border-radius: 8px;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
+  gap: 7px;
   font-size: 14px;
-  font-weight: 500;
-  color: #212529;
+  font-weight: 700;
+  color: #1f2937;
 }
 
 .input,
-.textarea,
-.select {
-  margin-top: 4px;
-  padding: 8px 12px;
-  font-size: 14px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+.textarea {
+  width: 100%;
+  padding: 12px 13px;
+  font-size: 15px;
+  color: #111827;
+  background-color: #fbfdff;
+  border: 1px solid #cfd8e3;
+  border-radius: 8px;
   resize: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #8b97a8;
+}
+
+.input:focus,
+.textarea:focus {
+  background-color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+  outline: none;
+}
+
+.input {
+  min-height: 48px;
+}
+
+.textarea {
+  min-height: 156px;
+  line-height: 1.45;
+}
+
+.select {
+  font-size: 15px;
+}
+
+.selectIcon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.select :global(.tagSelect__control) {
+  min-height: 48px;
+  cursor: pointer;
+  background-color: #fbfdff;
+  border-color: #cfd8e3;
+  border-radius: 8px;
+  box-shadow: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.select :global(.tagSelect__control:hover) {
+  border-color: #b7c4d4;
+}
+
+.select :global(.tagSelect__control--is-focused) {
+  background-color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.select :global(.tagSelect__value-container) {
+  padding: 0 13px;
+}
+
+.select :global(.tagSelect__single-value) {
+  color: #111827;
+  font-weight: 500;
+}
+
+.select :global(.tagSelect__dropdown-indicator) {
+  color: #334155;
+  padding: 0 13px;
+}
+
+.select :global(.tagSelect__dropdown-indicator:hover) {
+  color: #2563eb;
+}
+
+.select :global(.tagSelect__menu) {
+  z-index: 5;
+  overflow: hidden;
+  margin-top: 8px;
+  border: 1px solid #dce3ec;
+  border-radius: 8px;
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12);
+}
+
+.select :global(.tagSelect__menu-list) {
+  padding: 6px;
+}
+
+.select :global(.tagSelect__option) {
+  border-radius: 6px;
+  cursor: pointer;
+  color: #1f2937;
+}
+
+.select :global(.tagSelect__option--is-focused) {
+  background-color: #eef4ff;
+}
+
+.select :global(.tagSelect__option--is-selected) {
+  background-color: #2563eb;
+  color: #ffffff;
 }
 
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
+  padding-top: 6px;
 }
 
 .submitButton {
-  padding: 8px 16px;
-  font-size: 16px;
-  background-color: #0d6efd;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  background-color: #2563eb;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.22);
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .submitButton:hover {
-  background-color: #0b5ed7;
+  background-color: #1d4ed8;
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.28);
+  transform: translateY(-1px);
 }
 
 .submitButton:disabled {
-  background-color: #6c757d;
+  background-color: #94a3b8;
+  box-shadow: none;
   cursor: not-allowed;
+  transform: none;
+}
+
+.buttonIcon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  flex-shrink: 0;
 }
 
 .cancelButton {
-  padding: 8px 16px;
-  font-size: 16px;
-  background-color: #f8f9fa;
-  color: #212529;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+  min-height: 46px;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  background-color: #ffffff;
+  color: #334155;
+  border: 1px solid #cfd8e3;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .cancelButton:hover {
-  background-color: #e2e6ea;
+  background-color: #f8fafc;
+  border-color: #b7c4d4;
+  color: #111827;
+  transform: translateY(-1px);
+}
+
+.submitButton:focus-visible,
+.cancelButton:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.2);
+  outline-offset: 2px;
 }
 
 .error {
-  color: #dc3545;
-  font-size: 12px;
-  margin-top: 4px;
+  color: #be123c;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+  padding: 10px 12px;
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
+  border-radius: 8px;
+}
+
+@media (max-width: 640px) {
+  .form {
+    gap: 18px;
+    padding: 18px;
+  }
+
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .submitButton,
+  .cancelButton {
+    width: 100%;
+  }
 }

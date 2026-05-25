@@ -1,0 +1,33 @@
+<svg width="1200" height="520" viewBox="0 0 1200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="520" rx="34" fill="#F4F7FB"/>
+  <rect x="64" y="56" width="1072" height="408" rx="26" fill="#FFFFFF" stroke="#DCE3EC"/>
+  <rect x="64" y="56" width="1072" height="72" rx="26" fill="#171717"/>
+  <path d="M64 102H1136V128H64V102Z" fill="#171717"/>
+  <rect x="96" y="78" width="34" height="34" rx="8" fill="#2563EB"/>
+  <path d="M124 82V91C124 92.7 125.3 94 127 94H133L124 82Z" fill="#93C5FD"/>
+  <path d="M105 107V87H110L119 99V87H124V107H119L110 94.5V107H105Z" fill="white"/>
+  <text x="146" y="101" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">NoteHub</text>
+  <rect x="864" y="80" width="78" height="28" rx="8" fill="#FFFFFF" fill-opacity="0.08"/>
+  <rect x="954" y="80" width="74" height="28" rx="8" fill="#FFFFFF" fill-opacity="0.08"/>
+  <rect x="1040" y="80" width="64" height="28" rx="8" fill="#FFFFFF" fill-opacity="0.08"/>
+  <rect x="96" y="168" width="214" height="248" rx="18" fill="#181B20"/>
+  <rect x="124" y="200" width="132" height="36" rx="10" fill="#FFFFFF"/>
+  <rect x="124" y="252" width="116" height="22" rx="8" fill="#FFFFFF" fill-opacity="0.1"/>
+  <rect x="124" y="294" width="132" height="22" rx="8" fill="#FFFFFF" fill-opacity="0.1"/>
+  <rect x="124" y="336" width="98" height="22" rx="8" fill="#FFFFFF" fill-opacity="0.1"/>
+  <rect x="352" y="168" width="752" height="248" rx="18" fill="#F8FAFC" stroke="#DCE3EC"/>
+  <rect x="392" y="204" width="248" height="42" rx="10" fill="#FFFFFF" stroke="#CFD8E3"/>
+  <rect x="896" y="204" width="168" height="42" rx="10" fill="#2563EB"/>
+  <circle cx="1030" cy="225" r="9" stroke="white" stroke-width="2"/>
+  <path d="M1030 220V230M1025 225H1035" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <rect x="392" y="282" width="190" height="82" rx="12" fill="#FFFFFF" stroke="#DCE3EC"/>
+  <rect x="610" y="282" width="190" height="82" rx="12" fill="#FFFFFF" stroke="#DCE3EC"/>
+  <rect x="828" y="282" width="190" height="82" rx="12" fill="#FFFFFF" stroke="#DCE3EC"/>
+  <rect x="416" y="306" width="118" height="14" rx="7" fill="#111827"/>
+  <rect x="416" y="330" width="132" height="10" rx="5" fill="#94A3B8"/>
+  <rect x="634" y="306" width="112" height="14" rx="7" fill="#111827"/>
+  <rect x="634" y="330" width="126" height="10" rx="5" fill="#94A3B8"/>
+  <rect x="852" y="306" width="120" height="14" rx="7" fill="#111827"/>
+  <rect x="852" y="330" width="112" height="10" rx="5" fill="#94A3B8"/>
+  <text x="96" y="478" fill="#64748B" font-family="Arial, Helvetica, sans-serif" font-size="18">Authenticated notes, filters, profile editing and polished App Router UI.</text>
+</svg>

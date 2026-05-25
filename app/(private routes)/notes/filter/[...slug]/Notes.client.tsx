@@ -40,6 +40,9 @@ export default function NotesClient({ tag }: { tag?: string }) {
         <SearchBox onSearch={handleSearch} />
         <Link href="/notes/action/create" className={css.button}>
           Create note
+          <svg className={css.buttonIcon} aria-hidden="true">
+            <use href="/sprite.svg#icon-add" />
+          </svg>
         </Link>
       </div>
 

@@ -7,7 +7,7 @@ const PAGE_URL = `${BASE_URL}/notes/action/create`;
 const OG_IMAGE_URL = "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg";
 
 export const metadata: Metadata = {
-  title: "Create note | NoteHub",
+  title: "Create note",
   description:
     "Create a new note in NoteHub. Add a title, content, and select a tag.",
   alternates: {

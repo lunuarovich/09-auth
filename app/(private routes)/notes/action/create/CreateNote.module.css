@@ -1,18 +1,33 @@
 .main {
   flex: 1;
+  display: flex;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(244, 247, 251, 0)),
+    #f4f7fb;
 }
 
 .container {
-  width: 90%;
-  max-width: 1280px;
-  margin: 0px auto;
-  padding: 0 16px 16px;
+  width: min(100%, 960px);
+  margin: 0 auto;
+  padding: 34px 24px 52px;
 }
 
 .title {
-  font-size: 36px;
+  font-size: 40px;
+  line-height: 1.1;
   font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 60px;
-  text-align: center;
+  color: #111827;
+  margin: 0 0 22px;
+  text-align: left;
+  letter-spacing: 0;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 24px 14px 36px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import css from "./SignUpPage.module.css";
 import { register } from "@/lib/api/clientApi";
@@ -30,9 +31,12 @@ export default function SignUpPage() {
 
   return (
     <main className={css.mainContent}>
-      <h1 className={css.formTitle}>Sign up</h1>
-
       <form className={css.form} onSubmit={handleSubmit}>
+        <div className={css.header}>
+          <p className={css.eyebrow}>Create account</p>
+          <h1 className={css.formTitle}>Sign up</h1>
+        </div>
+
         <div className={css.formGroup}>
           <label htmlFor="email">Email</label>
           <input
@@ -40,6 +44,8 @@ export default function SignUpPage() {
             type="email"
             name="email"
             className={css.input}
+            placeholder="you@example.com"
+            autoComplete="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -53,6 +59,8 @@ export default function SignUpPage() {
             type="password"
             name="password"
             className={css.input}
+            placeholder="Create a password"
+            autoComplete="new-password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -66,6 +74,13 @@ export default function SignUpPage() {
         </div>
 
         {error ? <p className={css.error}>{error}</p> : null}
+
+        <p className={css.switchText}>
+          Already have an account?{" "}
+          <Link href="/sign-in" className={css.switchLink}>
+            Sign in
+          </Link>
+        </p>
       </form>
     </main>
   );

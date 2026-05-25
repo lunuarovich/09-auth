@@ -3,6 +3,11 @@
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Select, {
+  components,
+  type DropdownIndicatorProps,
+  type SingleValue,
+} from "react-select";
 
 import { createNote } from "@/lib/api/clientApi";
 import type { CreateNotePayload } from "@/lib/api/clientApi";
@@ -19,7 +24,31 @@ const TAG_OPTIONS: Note["tag"][] = [
   "Shopping",
 ];
 
-type ChangeEl = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+type TagOption = {
+  value: Note["tag"];
+  label: Note["tag"];
+};
+
+const SELECT_OPTIONS: TagOption[] = TAG_OPTIONS.map((tag) => ({
+  value: tag,
+  label: tag,
+}));
+
+type ChangeEl = HTMLInputElement | HTMLTextAreaElement;
+
+function DropdownIndicator(props: DropdownIndicatorProps<TagOption, false>) {
+  const iconId = props.selectProps.menuIsOpen
+    ? "icon-up-active"
+    : "icon-up-default";
+
+  return (
+    <components.DropdownIndicator {...props}>
+      <svg className={css.selectIcon} aria-hidden="true">
+        <use href={`/sprite.svg#${iconId}`} />
+      </svg>
+    </components.DropdownIndicator>
+  );
+}
 
 export default function NoteForm() {
   const router = useRouter();
@@ -49,13 +78,21 @@ export default function NoteForm() {
         setDraft({ content: value });
         return;
       }
-
-      if (name === "tag") {
-        setDraft({ tag: value as Note["tag"] });
-      }
     },
     [setDraft],
   );
+
+  const handleTagChange = useCallback(
+    (option: SingleValue<TagOption>) => {
+      if (!option) return;
+      setDraft({ tag: option.value });
+    },
+    [setDraft],
+  );
+
+  const selectedTag =
+    SELECT_OPTIONS.find((option) => option.value === draft.tag) ??
+    SELECT_OPTIONS[0];
 
   const createNoteAction = useCallback(
     async (formData: FormData) => {
@@ -92,6 +129,7 @@ export default function NoteForm() {
           id="title"
           name="title"
           className={css.input}
+          placeholder="Note title"
           value={draft.title}
           required
           minLength={3}
@@ -106,6 +144,7 @@ export default function NoteForm() {
           id="content"
           name="content"
           className={css.textarea}
+          placeholder="Write the note details..."
           value={draft.content}
           maxLength={500}
           minLength={3}
@@ -116,20 +155,19 @@ export default function NoteForm() {
 
       <div className={css.formGroup}>
         <label htmlFor="tag">Tag</label>
-        <select
-          id="tag"
-          name="tag"
+        <input type="hidden" name="tag" value={draft.tag} />
+        <Select<TagOption, false>
+          inputId="tag"
+          instanceId="tag-select"
           className={css.select}
-          value={draft.tag}
+          classNamePrefix="tagSelect"
+          components={{ DropdownIndicator, IndicatorSeparator: null }}
+          options={SELECT_OPTIONS}
+          value={selectedTag}
+          isSearchable={false}
           required
-          onChange={handleChange}
-        >
-          {TAG_OPTIONS.map((t) => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
+          onChange={handleTagChange}
+        />
       </div>
 
       {mutation.isError && (
@@ -143,6 +181,9 @@ export default function NoteForm() {
           disabled={mutation.isPending}
         >
           {mutation.isPending ? "Creating..." : "Create note"}
+          <svg className={css.buttonIcon} aria-hidden="true">
+            <use href="/sprite.svg#icon-add" />
+          </svg>
         </button>
 
         <button

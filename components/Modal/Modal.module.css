@@ -4,7 +4,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(33, 37, 41, 0.6);
+  padding: 24px;
+  background-color: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,10 +15,22 @@
 
 .modal {
   background-color: #ffffff;
-  padding: 24px;
+  padding: 28px;
   border-radius: 8px;
-  max-width: 500px;
+  max-width: 640px;
   width: 100%;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
+}
+
+@media (max-width: 640px) {
+  .backdrop {
+    padding: 14px;
+  }
+
+  .modal {
+    max-height: calc(100vh - 28px);
+    overflow-y: auto;
+    padding: 20px;
+  }
 }
